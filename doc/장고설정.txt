@@ -1,0 +1,138 @@
+ [mysite db 만들기]
+ 1. # mysql -u root -p
+ 2. MariaDB [(none)]> create database mysite;
+ 3. MariaDB [(none)]> create user 'mysite'@'192.168.%.%' identified by 'mysite'
+ 4. MariaDB [(none)]> grant all privileges on mysite.* to 'mysite'@'192.168.%.%';
+ 5. MariaDB [(none)]> flush privileges;
+ 6. workbench 에서 접속 테스트
+ 7.
+
+--------------------------------------------------------------------
+ 장고 프로젝트(mysite)  만들기 -
+
+1.PyCharm에서 mysite 프로젝트 만들기
+
+2.
+Django 설치
+  터미널에서
+#pip3 install django
+
+3.mysqlclient 설치
+  터미널에서
+  pip install mysqlclient
+
+4.장고 프로젝트 생성
+  터미널에서
+django-admin startproject mysite
+
+5. 디렉토리 정리
+
+6. settings.py 설정
+
+    1) TIME_ZONE = 'Asia/Seoul'
+    2) DATABASES = {
+    	'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        	'NAME': 'mysite',
+        	'USER': 'mysite',
+        	'PASSWORD': 'mysite',
+        	'HOST': '192.168.1.111',
+        	'PORT': 3307
+    		}
+	}
+
+7. 기본적으로 장고 프로젝트가 관리하는 테이블을 생성
+   터미널에서
+   python manage.py migrate
+
+
+8.
+장고 프로젝트 관리자 계정 생성하기
+터미널에서
+python manage.py createsuperuser
+
+9. Application 들의 통합 templates 디렉토리 만들기
+        1)mysite(프로젝트 루트)
+                |---- templates
+        2)settings.py에 설정작업
+       TEMPLATES = 설정에 import해준뒤 os.path.join(BASE_DIR, 'templates')
+
+10. 지금까지 작업 내용 확인하기
+1) 서버 시작하기
+   터미널에서
+   # python manage.py runserver 0.0.0.0:1111 (포트 선택)
+2) 브라우저에서
+  http://127.0.0.1:1111로 접근
+
+
+============================================================================================
+
+
+ [mysite의 Application 만들기 ]
+
+ mysite
+    | ---- main         (with 강사)
+    | ---- guestbook    (과제)
+	| ---- user         (with 강사)
+	| ---- board        (평가과제)
+
+
+ 2. main Application 만들기
+    1) 터미널에서
+        # python manage.py startapp helloworld
+     2) templates/helloworld 디렉토리 생성
+     3) Application 등록
+        setting.py 의 INSTALLED_APPS 에 추가한다.
+
+ 3. emaillist Application 만들기
+    1) 터미널에서
+        # python manage.py startapp emaillist
+     2) templates/emaillist 디렉토리 생성
+     3) Application 등록
+        setting.py 의 INSTALLED_APPS 에 추가한다.
+     --------------------------------------------------------------------
+     4) /hello url mapping (urls.py) url <---> view의 함수
+     5) view 함수에서 templates에 data전달 및 render 결과 반환
+     ---------------------------------------------------------------------
+     (urls.py)에서
+     from django.contrib import admin
+            from django.urls import path
+            import helloworld.views as helloworld_views
+
+            urlpatterns = [
+                path('hello/', helloworld_views.hello),
+                path('hello2/', helloworld_views.hello2),
+                path('hello3/', helloword_views.hello3),
+                path('admin/', admin.site.urls),
+                ]
+      helloworld 디렉토리에서 hello.html 생성
+          body
+          <h1>Hello World</h1>
+    <a href="/hello2">Hello world2</a>
+    hello2.html 생성
+    body
+        <h1>Hello World2</h1>
+    <a href="/hello">Hello World</a>
+    hello3.html 생성
+         <h1>{{n}}님 안녕하세요.</h1>
+    <a href="/hello">메인으로 가기</a>
+      이후 view. py에서
+     from django.shortcuts import render
+
+        def hello(request):
+            return render(request, 'helloworld/hello.html')
+        def hello2(request):
+            return render(request, 'helloworld/hello2.html')g
+        def hello3(request):
+            name = request.GET['name']
+            data = {'n': name}
+            return render(request, 'helloworld/hello3.html', data) 입력
+     --------------------------------------------------------------------
+
+
+ 4. guestbook Application 만들기
+    1) 터미널에서
+        # python manage.py startapp guestbook
+    2) template/guestbook 디렉토리 생성
+    3) Application 등록
+        setting.py 의 INSTALLED_APPS 에 추가한다.
