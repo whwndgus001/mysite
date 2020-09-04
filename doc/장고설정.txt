@@ -63,6 +63,12 @@ python manage.py createsuperuser
    # python manage.py runserver 0.0.0.0:1111 (포트 선택)
 2) 브라우저에서
   http://127.0.0.1:1111로 접근
+12. /assets/** URL 을 /statics/** 경로로 매핑
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'statics'),
+     )
+     STATIC_URL = '/assets/'
+
 
 
 ============================================================================================
@@ -79,8 +85,8 @@ python manage.py createsuperuser
 
  2. main Application 만들기
     1) 터미널에서
-        # python manage.py startapp helloworld
-     2) templates/helloworld 디렉토리 생성
+        # python manage.py startapp main
+     2) templates/main 디렉토리 생성
      3) Application 등록
         setting.py 의 INSTALLED_APPS 에 추가한다.
 
