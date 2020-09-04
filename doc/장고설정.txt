@@ -63,7 +63,7 @@ python manage.py createsuperuser
    # python manage.py runserver 0.0.0.0:1111 (포트 선택)
 2) 브라우저에서
   http://127.0.0.1:1111로 접근
-12. /assets/** URL 을 /statics/** 경로로 매핑
+12. /assets/** URL 을 /statics/** 경로로 매핑(Settings)
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, 'statics'),
      )
