@@ -129,3 +129,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'statics'),
 )
 STATIC_URL = '/assets/'
+
+#session
+SESSION_EXPIRE_AT_BROSWER_CLOSE= True
