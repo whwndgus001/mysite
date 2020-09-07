@@ -38,3 +38,22 @@ def login(request):
 def logout(request):
     del request.session['authuser']
     return HttpResponseRedirect('/')
+
+def updateform(request):
+    no = request.session['authuser']['no']
+
+    # 1. 데이터를 가져오기
+    result = usermodels.fetchonebyno(str(no))
+    data = {'user': result}
+
+    return render(request, 'user/updateform.html', data)
+
+def update(request):
+    no = request.session['authuser']['no']
+    name = request.POST['name']
+    gender = request.POST['gender']
+    password = request.POST['password']
+
+    usermodels.update(name, password, gender, no)
+    request.session['authuser'] = {'no': no, 'name': name}
+    return HttpResponseRedirect('/')

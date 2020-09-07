@@ -39,6 +39,39 @@ def fetchone(email, password):
 
     return result
 
+def fetchonebyno(no):
+    connection = conne()
+    cursor = connection.cursor(DictCursor)
+
+
+    sql = '''
+       select name, email, gender
+       from user
+       where no=%s
+     '''
+    cursor.execute(sql, no)
+    result = cursor.fetchone()
+
+    cursor.close()
+    connection.close()
+
+    return result
+
+def update(name, password, gender, no):
+    connection = conne()
+    cursor = connection.cursor()
+
+    if password == '':
+        sql = 'update user set name=%s, gender=%s, where no=%s'
+        cursor.execute(sql, (name, gender, no))
+    else:
+        sql = 'update user set name=%s, password=password(%s), gender=%s where no=%s'
+        cursor.execute(sql, (name, password, gender, no))
+    connection.commit()
+
+    cursor.close()
+    connection.close()
+
 
 
 
