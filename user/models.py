@@ -45,9 +45,9 @@ def fetchonebyno(no):
 
 
     sql = '''
-       select name, email, gender
-       from user
-       where no=%s
+         select name, email, gender
+         from user
+         where no=%s
      '''
     cursor.execute(sql, no)
     result = cursor.fetchone()
@@ -62,10 +62,16 @@ def update(name, password, gender, no):
     cursor = connection.cursor()
 
     if password == '':
-        sql = 'update user set name=%s, gender=%s, where no=%s'
+        sql = '''
+            update user
+            set name=%s, gender=%s, where no=%s
+        '''
         cursor.execute(sql, (name, gender, no))
     else:
-        sql = 'update user set name=%s, password=password(%s), gender=%s where no=%s'
+        sql = '''
+            update user
+            set name=%s, password=password(%s), gender=%s where no=%s
+            '''
         cursor.execute(sql, (name, password, gender, no))
     connection.commit()
 

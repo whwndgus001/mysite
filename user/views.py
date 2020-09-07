@@ -30,7 +30,7 @@ def login(request):
         return HttpResponseRedirect('/user/loginform?result=fail')
 
     # login 처리
-    request.session['authuser'] = result;
+    request.session['authuser'] = result
 
 
     return HttpResponseRedirect('/')
@@ -42,18 +42,17 @@ def logout(request):
 def updateform(request):
     no = request.session['authuser']['no']
 
-    # 1. 데이터를 가져오기
     result = usermodels.fetchonebyno(str(no))
     data = {'user': result}
 
     return render(request, 'user/updateform.html', data)
-
 def update(request):
-    no = request.session['authuser']['no']
     name = request.POST['name']
-    gender = request.POST['gender']
     password = request.POST['password']
+    gender = request.POST['gender']
+    no = request.session['authuser']['no']
 
     usermodels.update(name, password, gender, no)
     request.session['authuser'] = {'no': no, 'name': name}
+
     return HttpResponseRedirect('/')
