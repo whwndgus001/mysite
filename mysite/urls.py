@@ -30,6 +30,9 @@ urlpatterns = [
 
     path('user/joinform' , user_views.joinform),
     path('user/joinsuccess' , user_views.joinsuccess),
+    path('user/join' , user_views.join),
+    path('user/login', user_views.login),
+    path('user/loginform', user_views.loginform),
 
 
     path('admin/', admin.site.urls),
