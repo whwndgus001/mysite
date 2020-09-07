@@ -29,6 +29,7 @@ urlpatterns = [
 
 
     path('user/joinform' , user_views.joinform),
+    path('user/joinsuccess' , user_views.joinsuccess),
 
 
     path('admin/', admin.site.urls),
